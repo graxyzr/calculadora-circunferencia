@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora - Circunferência</title>
+    <link rel="icon" type="image/png" href="../img/circunferencia.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #e0f7fa;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 25px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            animation: fadeIn 0.5s ease;
+            text-align: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h1,
+        h2 {
+            color: #00796b;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 1.8em;
+        }
+
+        h2 {
+            font-size: 1.4em;
+        }
+
+        section {
+            margin-bottom: 25px;
+        }
+
+        input[type="text"] {
+            width: calc(50% - 10px);
+            padding: 12px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+        }
+
+        input[type="text"]:focus {
+            border-color: #00796b;
+            box-shadow: 0 0 8px rgba(0, 121, 107, 0.3);
+            outline: none;
+        }
+
+        button {
+            padding: 12px 20px;
+            margin-top: 15px;
+            cursor: pointer;
+            background-color: #00796b;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+        }
+
+        button:hover {
+            background-color: #004d40;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            background-color: #00695c;
+        }
+
+        p {
+            font-size: 1em;
+            color: #555;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            input[type="text"] {
+                width: 100%;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            button {
+                width: 100%;
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Calculadora de Circunferência</h1>
+
+        <section>
+            <h2>Equação Geral e Reduzida</h2>
+            <input type="text" id="coefA" placeholder="Coeficiente A">
+            <input type="text" id="coefB" placeholder="Coeficiente B">
+            <input type="text" id="coefC" placeholder="Coeficiente C">
+            <input type="text" id="coefD" placeholder="Coeficiente D">
+            <input type="text" id="coefE" placeholder="Coeficiente E">
+            <input type="text" id="coefF" placeholder="Coeficiente F">
+            <button onclick="calcularEquacao()">Calcular</button>
+            <p id="resultadoEquacao"></p>
+        </section>
+
+        <section>
+            <h2>Posição de um Ponto</h2>
+            <input type="text" id="pontoX" placeholder="Coordenada X do Ponto">
+            <input type="text" id="pontoY" placeholder="Coordenada Y do Ponto">
+            <button onclick="calcularPosicaoPonto()">Verificar Posição</button>
+            <p id="resultadoPonto"></p>
+        </section>
+
+        <section>
+            <h2>Posição de uma Reta</h2>
+            <input type="text" id="retaA" placeholder="Coeficiente A da Reta">
+            <input type="text" id="retaB" placeholder="Coeficiente B da Reta">
+            <input type="text" id="retaC" placeholder="Coeficiente C da Reta">
+            <br>
+            <button onclick="calcularPosicaoReta()">Verificar Posição</button>
+            <p id="resultadoReta"></p>
+        </section>
+        <br><br>
+        <button onclick="window.location.href='../index.html'">Voltar ao Menu</button>
+    </div>
+    <script>
+        function calcularEquacao() {
+            const A = parseFloat(document.getElementById('coefA').value);
+            const B = parseFloat(document.getElementById('coefB').value);
+            const C = parseFloat(document.getElementById('coefC').value);
+            const D = parseFloat(document.getElementById('coefD').value);
+            const E = parseFloat(document.getElementById('coefE').value);
+            const F = parseFloat(document.getElementById('coefF').value);
+
+            const h = -D / (2 * A);
+            const k = -E / (2 * A);
+            const r = Math.sqrt((D ** 2 + E ** 2 - 4 * A * F) / (4 * A ** 2));
+
+            document.getElementById('resultadoEquacao').innerText =
+                `Centro: (${h.toFixed(2)}, ${k.toFixed(2)}), Raio: ${r.toFixed(2)}`;
+        }
+
+        function calcularPosicaoPonto() {
+            const x = parseFloat(document.getElementById('pontoX').value);
+            const y = parseFloat(document.getElementById('pontoY').value);
+            const h = parseFloat(document.getElementById('coefD').value) / -2;
+            const k = parseFloat(document.getElementById('coefE').value) / -2;
+            const r = Math.sqrt((h ** 2 + k ** 2 - parseFloat(document.getElementById('coefF').value)));
+
+            const dist = Math.sqrt((x - h) ** 2 + (y - k) ** 2);
+            let posicao = '';
+
+            if (dist < r) posicao = 'dentro';
+            else if (dist === r) posicao = 'na circunferência';
+            else posicao = 'fora';
+
+            document.getElementById('resultadoPonto').innerText = `O ponto está ${posicao}.`;
+        }
+
+        function calcularPosicaoReta() {
+            const A = parseFloat(document.getElementById('retaA').value);
+            const B = parseFloat(document.getElementById('retaB').value);
+            const C = parseFloat(document.getElementById('retaC').value);
+            const h = parseFloat(document.getElementById('coefD').value) / -2;
+            const k = parseFloat(document.getElementById('coefE').value) / -2;
+            const r = Math.sqrt((h ** 2 + k ** 2 - parseFloat(document.getElementById('coefF').value)));
+
+            const dist = Math.abs(A * h + B * k + C) / Math.sqrt(A ** 2 + B ** 2);
+            let posicao = '';
+
+            if (dist < r) posicao = 'secante';
+            else if (dist === r) posicao = 'tangente';
+            else posicao = 'externa';
+
+            document.getElementById('resultadoReta').innerText = `A reta é ${posicao} à circunferência.`;
+        }
+    </script>
+</body>
+
+</html>

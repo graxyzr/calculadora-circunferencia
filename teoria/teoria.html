@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teoria - Circunferência</title>
+    <link rel="icon" type="image/png" href="../img/circunferencia.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #e0f7fa;
+            color: #333;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            padding: 25px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+            text-align: left;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            font-size: 1.8em;
+            color: #00796b;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 1.4em;
+            color: #004d40;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 1em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            margin-top: 10px;
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+
+        ul li {
+            font-size: 1em;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            max-width: 200px;
+            margin: 20px auto 0;
+            padding: 12px 20px;
+            cursor: pointer;
+            background-color: #00796b;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        button:hover {
+            background-color: #004d40;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            background-color: #00695c;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.6em;
+            }
+
+            h2 {
+                font-size: 1.2em;
+            }
+
+            p,
+            ul li {
+                font-size: 0.95em;
+            }
+
+            button {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Teoria sobre Circunferência</h1>
+
+        <section>
+            <h2>O que é uma Circunferência?</h2>
+            <p>
+                A circunferência é o conjunto de todos os pontos que estão a uma mesma distância de um ponto fixo,
+                chamado de centro. Essa distância constante é conhecida como raio (r). Ela é representada
+                geometricamente por uma linha curva fechada.
+            </p>
+        </section>
+
+        <section>
+            <h2>Equação Geral da Circunferência</h2>
+            <p>
+                A equação geral da circunferência é dada pela fórmula:
+            </p>
+            <p>
+                <strong>x² + y² + Dx + Ey + F = 0</strong>
+            </p>
+            <p>
+                Nessa fórmula, <em>D</em>, <em>E</em>, e <em>F</em> são constantes que, quando ajustadas, permitem
+                definir o centro e o raio da circunferência. Para obter o centro e o raio, é preciso realizar a
+                conversão para a equação reduzida.
+            </p>
+        </section>
+
+        <section>
+            <h2>Equação Reduzida da Circunferência</h2>
+            <p>
+                A equação reduzida da circunferência é uma forma mais direta de representar a posição e o tamanho da
+                circunferência. É dada pela fórmula:
+            </p>
+            <p>
+                <strong>(x - a)² + (y - b)² = r²</strong>
+            </p>
+            <p>
+                Nesta fórmula, <em>(a, b)</em> representa o centro da circunferência, e <em>r</em> é o raio. A conversão
+                da equação geral para a reduzida pode ser feita completando o quadrado.
+            </p>
+        </section>
+
+        <section>
+            <h2>Posição Relativa entre Ponto e Circunferência</h2>
+            <p>
+                A posição relativa entre um ponto e uma circunferência pode ser determinada comparando a distância do
+                ponto ao centro da circunferência com o raio. Existem três possibilidades:
+            </p>
+            <ul>
+                <li><strong>Ponto fora da circunferência:</strong> A distância do ponto ao centro é maior que o raio.
+                </li>
+                <li><strong>Ponto sobre a circunferência:</strong> A distância do ponto ao centro é igual ao raio.</li>
+                <li><strong>Ponto dentro da circunferência:</strong> A distância do ponto ao centro é menor que o raio.
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>Posição Relativa entre Reta e Circunferência</h2>
+            <p>
+                A posição relativa entre uma reta e uma circunferência depende da quantidade de pontos de interseção
+                entre eles. Existem três casos principais:
+            </p>
+            <ul>
+                <li><strong>Reta secante:</strong> A reta intercepta a circunferência em dois pontos distintos.</li>
+                <li><strong>Reta tangente:</strong> A reta intercepta a circunferência em um único ponto.</li>
+                <li><strong>Reta externa:</strong> A reta não intercepta a circunferência em nenhum ponto.</li>
+            </ul>
+        </section>
+
+        <button onclick="window.location.href='../index.html'">Voltar ao Menu</button>
+    </div>
+</body>
+
+</html>
