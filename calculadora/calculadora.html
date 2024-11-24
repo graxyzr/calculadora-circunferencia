@@ -112,6 +112,11 @@
             text-align: center;
         }
 
+        .erro {
+            color: red;
+            font-weight: bold;
+        }
+
         @media (max-width: 600px) {
             input[type="text"] {
                 width: 100%;
@@ -134,15 +139,23 @@
         <h1>Calculadora de Circunferência</h1>
 
         <section>
-            <h2>Equação Geral e Reduzida</h2>
+            <h2>Equação Geral</h2>
             <input type="text" id="coefA" placeholder="Coeficiente A">
             <input type="text" id="coefB" placeholder="Coeficiente B">
-            <input type="text" id="coefC" placeholder="Coeficiente C">
-            <input type="text" id="coefD" placeholder="Coeficiente D">
-            <input type="text" id="coefE" placeholder="Coeficiente E">
-            <input type="text" id="coefF" placeholder="Coeficiente F">
-            <button onclick="calcularEquacao()">Calcular</button>
-            <p id="resultadoEquacao"></p>
+            <input type="text" id="coefR" placeholder="Coeficiente do Raio">
+            <br>
+            <button onclick="calcularEquacaoGeral()">Calcular Equação Geral</button>
+            <p id="resultadoGeral"></p>
+        </section>
+
+        <section>
+            <h2>Equação Reduzida</h2>
+            <input type="text" id="coefA2" placeholder="Coeficiente A">
+            <input type="text" id="coefD2" placeholder="Coeficiente D">
+            <input type="text" id="coefE2" placeholder="Coeficiente E">
+            <input type="text" id="coefF2" placeholder="Coeficiente F">
+            <button onclick="calcularEquacaoReduzida()">Calcular Equação Reduzida</button>
+            <p id="resultadoReduzida"></p>
         </section>
 
         <section>
@@ -162,59 +175,122 @@
             <button onclick="calcularPosicaoReta()">Verificar Posição</button>
             <p id="resultadoReta"></p>
         </section>
-        <br><br>
+
         <button onclick="window.location.href='../index.html'">Voltar ao Menu</button>
     </div>
+
     <script>
-        function calcularEquacao() {
-            const A = parseFloat(document.getElementById('coefA').value);
-            const B = parseFloat(document.getElementById('coefB').value);
-            const C = parseFloat(document.getElementById('coefC').value);
-            const D = parseFloat(document.getElementById('coefD').value);
-            const E = parseFloat(document.getElementById('coefE').value);
-            const F = parseFloat(document.getElementById('coefF').value);
+        function isValidInput(value) {
+            return !isNaN(value) && value !== '';
+        }
+
+        function calcularEquacaoGeral() {
+            const a = parseFloat(document.getElementById('coefA').value);
+            const b = parseFloat(document.getElementById('coefB').value);
+            const r = parseFloat(document.getElementById('coefR').value);
+
+            if (!isValidInput(a) || !isValidInput(b) || !isValidInput(r)) {
+                document.getElementById('resultadoGeral').innerText = "Por favor, insira valores válidos.";
+                document.getElementById('resultadoGeral').classList.add('erro');
+                return;
+            }
+
+            const resultado = `x² + y² - 2(${a})x - 2(${b})y + (${a}²) + (${b}²) - (${r}²) = 0`;
+
+            document.getElementById('resultadoGeral').innerText = `Equação Geral: ${resultado}`;
+            document.getElementById('resultadoGeral').classList.remove('erro');
+        }
+
+        function calcularEquacaoReduzida() {
+            const A = parseFloat(document.getElementById('coefA2').value);
+            const D = parseFloat(document.getElementById('coefD2').value);
+            const E = parseFloat(document.getElementById('coefE2').value);
+            const F = parseFloat(document.getElementById('coefF2').value);
+
+            if (!isValidInput(A) || !isValidInput(D) || !isValidInput(E) || !isValidInput(F)) {
+                document.getElementById('resultadoReduzida').innerText = "Por favor, insira valores válidos.";
+                document.getElementById('resultadoReduzida').classList.add('erro');
+                return;
+            }
 
             const h = -D / (2 * A);
             const k = -E / (2 * A);
-            const r = Math.sqrt((D ** 2 + E ** 2 - 4 * A * F) / (4 * A ** 2));
 
-            document.getElementById('resultadoEquacao').innerText =
-                `Centro: (${h.toFixed(2)}, ${k.toFixed(2)}), Raio: ${r.toFixed(2)}`;
+            const discriminante = D ** 2 + E ** 2 - 4 * A * F;
+            if (discriminante < 0) {
+                document.getElementById('resultadoReduzida').innerText = "Não é possível calcular a equação reduzida: discriminante negativo.";
+                document.getElementById('resultadoReduzida').classList.add('erro');
+                return;
+            }
+
+            const r = Math.sqrt(discriminante) / (2 * A);
+
+            const reduzida = `(x - ${h.toFixed(2)})² + (y - ${k.toFixed(2)})² = ${r.toFixed(2)}²`;
+
+            document.getElementById('resultadoReduzida').innerText =
+                `Equação Reduzida: ${reduzida}`;
+            document.getElementById('resultadoReduzida').classList.remove('erro');
         }
 
         function calcularPosicaoPonto() {
             const x = parseFloat(document.getElementById('pontoX').value);
             const y = parseFloat(document.getElementById('pontoY').value);
-            const h = parseFloat(document.getElementById('coefD').value) / -2;
-            const k = parseFloat(document.getElementById('coefE').value) / -2;
-            const r = Math.sqrt((h ** 2 + k ** 2 - parseFloat(document.getElementById('coefF').value)));
+            const a = parseFloat(document.getElementById('coefA').value);
+            const b = parseFloat(document.getElementById('coefB').value);
+            const r = parseFloat(document.getElementById('coefR').value);
+
+            if (!isValidInput(x) || !isValidInput(y) || !isValidInput(a) || !isValidInput(b) || !isValidInput(r)) {
+                document.getElementById('resultadoPonto').innerText = "Por favor, insira valores válidos.";
+                document.getElementById('resultadoPonto').classList.add('erro');
+                return;
+            }
+
+            const h = a;
+            const k = b;
+            const rCirculo = r;
 
             const dist = Math.sqrt((x - h) ** 2 + (y - k) ** 2);
             let posicao = '';
 
-            if (dist < r) posicao = 'dentro';
-            else if (dist === r) posicao = 'na circunferência';
-            else posicao = 'fora';
+            if (dist < rCirculo) {
+                posicao = 'Dentro da circunferência';
+            } else if (dist === rCirculo) {
+                posicao = 'Na circunferência';
+            } else {
+                posicao = 'Fora da circunferência';
+            }
 
-            document.getElementById('resultadoPonto').innerText = `O ponto está ${posicao}.`;
+            document.getElementById('resultadoPonto').innerText = `Posição do Ponto: ${posicao}`;
+            document.getElementById('resultadoPonto').classList.remove('erro');
         }
 
         function calcularPosicaoReta() {
-            const A = parseFloat(document.getElementById('retaA').value);
-            const B = parseFloat(document.getElementById('retaB').value);
-            const C = parseFloat(document.getElementById('retaC').value);
-            const h = parseFloat(document.getElementById('coefD').value) / -2;
-            const k = parseFloat(document.getElementById('coefE').value) / -2;
-            const r = Math.sqrt((h ** 2 + k ** 2 - parseFloat(document.getElementById('coefF').value)));
+            const a = parseFloat(document.getElementById('retaA').value);
+            const b = parseFloat(document.getElementById('retaB').value);
+            const c = parseFloat(document.getElementById('retaC').value);
+            const A = parseFloat(document.getElementById('coefA').value);
+            const B = parseFloat(document.getElementById('coefB').value);
+            const R = parseFloat(document.getElementById('coefR').value);
 
-            const dist = Math.abs(A * h + B * k + C) / Math.sqrt(A ** 2 + B ** 2);
+            if (!isValidInput(a) || !isValidInput(b) || !isValidInput(c) || !isValidInput(A) || !isValidInput(B) || !isValidInput(R)) {
+                document.getElementById('resultadoReta').innerText = "Por favor, insira valores válidos.";
+                document.getElementById('resultadoReta').classList.add('erro');
+                return;
+            }
+
+            const distancia = Math.abs(A * (-b) - B * (-a) + c) / Math.sqrt(A ** 2 + B ** 2);
             let posicao = '';
 
-            if (dist < r) posicao = 'secante';
-            else if (dist === r) posicao = 'tangente';
-            else posicao = 'externa';
+            if (distancia < R) {
+                posicao = 'A reta intersecta a circunferência';
+            } else if (distancia === R) {
+                posicao = 'A reta tangencia a circunferência';
+            } else {
+                posicao = 'A reta não intersecta a circunferência';
+            }
 
-            document.getElementById('resultadoReta').innerText = `A reta é ${posicao} à circunferência.`;
+            document.getElementById('resultadoReta').innerText = `Posição da Reta: ${posicao}`;
+            document.getElementById('resultadoReta').classList.remove('erro');
         }
     </script>
 </body>
